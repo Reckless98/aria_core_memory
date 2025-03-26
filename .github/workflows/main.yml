@@ -23,9 +23,11 @@ jobs:
         run: |
           mkdir -p "$(dirname "${{ github.event.inputs.file_path }}")"
 
-      - name: Write content
+      - name: Write content using heredoc
         run: |
-          echo "${{ github.event.inputs.content }}" > "${{ github.event.inputs.file_path }}"
+          cat <<EOF > "${{ github.event.inputs.file_path }}"
+${{ github.event.inputs.content }}
+EOF
 
       - name: Commit and push
         env:
