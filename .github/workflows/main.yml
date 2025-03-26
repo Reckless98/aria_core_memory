@@ -23,11 +23,11 @@ jobs:
         run: |
           mkdir -p "$(dirname "${{ github.event.inputs.file_path }}")"
 
-      - name: Write content using heredoc
+      - name: Write content using env variable + heredoc
+        env:
+          ARIA_CONTENT: ${{ github.event.inputs.content }}
         run: |
-          cat <<EOF > "${{ github.event.inputs.file_path }}"
-${{ github.event.inputs.content }}
-EOF
+          echo "$ARIA_CONTENT" > "${{ github.event.inputs.file_path }}"
 
       - name: Commit and push
         env:
