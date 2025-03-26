@@ -25,10 +25,12 @@ jobs:
           echo "${{ github.event.inputs.content }}" > "${{ github.event.inputs.file_path }}"
 
       - name: Commit and push
+        env:
+          TOKEN: ${{ secrets.ARIA_PAT }}
         run: |
           git config user.name "Aria Volf"
           git config user.email "aria@memory.vault"
           git add "${{ github.event.inputs.file_path }}"
           git commit -m "Aria: Updated ${{ github.event.inputs.file_path }}"
+          git remote set-url origin https://x-access-token:${TOKEN}@github.com/${{ github.repository }}
           git push
-
